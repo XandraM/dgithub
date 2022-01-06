@@ -1,16 +1,67 @@
-# This is a sample Python script.
+import tkinter
+import random
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+colours = ['Red', 'Blue', 'Purple', 'Orange', 'White',
+           'Green', 'Black', 'Yellow', 'Pink']
 
+score = 0
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+timeleft = 30
 
+def startGame(event):
+    if timeleft == 30:
+        countdown()
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+    nextColour()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+def nextColour(event):
+    global score
+    global timeleft
+
+    if timeleft > 0:
+        e.focus_set()
+        if e.get().lower() == colours[1].lower():
+            score += 1
+
+    e.delete(e, tkinter.END)
+
+    random.shuffle(colours)
+    label.config(fg = str(colours[1]), text = str(colours[0]))
+
+def countdown():
+    global timeleft
+    if timeleft > 0:
+        timeleft -= 1
+        timeLabel.config(text = 'Time left: ' + str(timeleft))
+        timeLabel.after(1000, countdown)
+
+root = tkinter.Tk()
+
+root.title('Colour game')
+
+root.geometry('375x200')
+
+instructions = tkinter.Label(root, text = 'Type in the coulor'
+                             'of the word, not the word text.',
+                                          font=('Halvetica', 12))
+instructions.pack()
+
+scoreLabel = tkinter.Label(root, text = 'Press enter to start',
+                           font=('Helvetica', 12))
+scoreLabel.pack()
+
+timeLabel =  tkinter.Label(root, text = 'Time left: ' +
+                           str(timeleft), font=('Helvetica', 12))
+timeLabel.pack()
+
+label = tkinter.Label(root, font=('Helvetica', 60))
+label.pack()
+
+e = tkinter.Entry(root)
+
+root.bind('<Return>', startGame)
+e.pack()
+
+e.focus_set()
+
+root.mainloop()
